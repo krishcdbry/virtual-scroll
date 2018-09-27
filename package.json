@@ -1,0 +1,32 @@
+{
+  "name": "virtuallist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "",
+    "build-main": "webpack --progress",
+    "build-live": "webpack --progress -w",
+    "build": "npm run build-main"
+  },
+  "author": "krishcdbry",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-polyfill": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "webpack": "^1.14.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.9",
+    "extract-loader": "^1.0.2",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "path": "^0.12.7",
+    "postcss-loader": "^2.1.0",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.20.2",
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "webpack-bundle-analyzer": "^2.11.1"
+  }
+}
