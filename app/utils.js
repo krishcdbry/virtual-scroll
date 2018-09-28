@@ -1,13 +1,3 @@
-/**
- * @name _adjustWindowMeasurments
- * @description Event handler for reset window measurments in case of resize screen or rotate device.
- * @type callback
- * @returns NULL
- */
-const adjustWindowMeasurments = () => {
-    WINDOW_WIDTH = window.innerWidth;
-    WINDOW_WIDTH = window.innerHeight;
-};
 
 /**
  * @name _formatTime
@@ -84,7 +74,6 @@ const getIndexOfkey = (inputArr, needleObj) => {
 };
 
 export  {
-    adjustWindowMeasurments,
     formatTime,
     getIndexOfkey
 }

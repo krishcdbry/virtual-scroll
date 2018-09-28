@@ -30,7 +30,6 @@ import {
 
 
 import {
-    adjustWindowMeasurments,
     getIndexOfkey
 } from './utils';
 
@@ -83,6 +82,17 @@ const InfiniteScroll = (window, document) => {
     let scrollUpRenderLimit = 0;
     
     let animationFrameProcessing = false;
+
+    /**
+     * @name adjustWindowMeasurments
+     * @description Event handler for reset window measurments in case of resize screen or rotate device.
+     * @type callback
+     * @returns NULL
+     */
+    const adjustWindowMeasurments = () => {
+        windowWidth = window.innerWidth;
+        windowHeight = window.innerHeight;
+    };
 
     /**
      * @name swipeTimeTaken

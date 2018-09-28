@@ -87,7 +87,7 @@ var CLASSNAME_USER_DATA = "name-section";
 var CLASSNAME_USERNAME = "username";
 var CLASSNAME_TIMESTAMP = "timestamp";
 
-var API_PATH = "http://message-list.appspot.com";
+var API_PATH = window.location.protocol + "//message-list.appspot.com";
 var API_LIMIT = 100;
 
 // DOM Element references
@@ -196,16 +196,6 @@ exports.GET_INTERACTED_ELEMENT = GET_INTERACTED_ELEMENT;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-/**
- * @name _adjustWindowMeasurments
- * @description Event handler for reset window measurments in case of resize screen or rotate device.
- * @type callback
- * @returns NULL
- */
-var adjustWindowMeasurments = function adjustWindowMeasurments() {
-    WINDOW_WIDTH = window.innerWidth;
-    WINDOW_WIDTH = window.innerHeight;
-};
 
 /**
  * @name _formatTime
@@ -281,7 +271,6 @@ var getIndexOfkey = function getIndexOfkey(inputArr, needleObj) {
     return idx;
 };
 
-exports.adjustWindowMeasurments = adjustWindowMeasurments;
 exports.formatTime = formatTime;
 exports.getIndexOfkey = getIndexOfkey;
 
@@ -366,6 +355,17 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
     var scrollUpRenderLimit = 0;
 
     var animationFrameProcessing = false;
+
+    /**
+     * @name adjustWindowMeasurments
+     * @description Event handler for reset window measurments in case of resize screen or rotate device.
+     * @type callback
+     * @returns NULL
+     */
+    var adjustWindowMeasurments = function adjustWindowMeasurments() {
+        windowWidth = window.innerWidth;
+        windowHeight = window.innerHeight;
+    };
 
     /**
      * @name swipeTimeTaken
@@ -1001,7 +1001,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
         });
         _constants.CONTENT_ELEMENT.addEventListener('touchmove', touchMove);
         _constants.CONTENT_ELEMENT.addEventListener('touchend', touchEnd);
-        window.addEventListener('resize', _utils.adjustWindowMeasurments);
+        window.addEventListener('resize', adjustWindowMeasurments);
     };
 
     /**
