@@ -110,13 +110,13 @@ section {
 	width: 100%;
 	height: auto;
 	margin: 10px 0px;
-	padding: 10px 17px;
+	padding: 12px 17px;
 	box-sizing: border-box;
 	border-radius: 2px;
 	background-color: #ffffff;
-	will-change: transform height;
 	transition: transform 0.2s, height 0.2s ease-in;
-    overflow: auto;
+	overflow: auto;
+	will-change: transform, height;
     
     &.remove {
         height: 0px !important;
