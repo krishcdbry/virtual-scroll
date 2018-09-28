@@ -51,13 +51,13 @@ const INTERACTION_OBJ = {
  */
 const GET_INTERACTED_ELEMENT = (e) => {
     try {
-        if (e.target.classList[0] == MESSAGE_CARD) {
+        if (e.target.classList[0] == CLASSNAME_CARD) {
             return e.target;
         }
         else {
             let elem = e.target;
             while(elem) {
-                if (elem.classList && elem.classList[0] == MESSAGE_CARD) {
+                if (elem.classList && elem.classList[0] == CLASSNAME_CARD) {
                     return elem;
                 }
                 elem = elem.parentNode;
