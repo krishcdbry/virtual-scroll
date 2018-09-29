@@ -623,7 +623,6 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
      * @param {*} translateY 
      */
     var removeFirstPage = function removeFirstPage(page, translateY) {
-        console.log("Removing Page", page, translateY);
         page.parentNode.removeChild(page);
         currentContentPaddingTop = translateY;
         applyPadding(translateY);
@@ -829,7 +828,6 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
      * @returns {Boolean}
      */
     var loadMorePages = function loadMorePages() {
-        console.log(activeViewportPages, totalPageCount);
         if (totalPageCount > 2 && activeViewportPages.length > 2) {
             if (activeViewportPages[2] != totalPageCount) {
                 return false;
