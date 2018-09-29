@@ -1,4 +1,5 @@
 # InfiniteScroll
+Infinitely Scrolling Message List
 
 Getting Started
 -----
