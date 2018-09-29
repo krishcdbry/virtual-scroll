@@ -933,10 +933,10 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
         } else {
 
             if (scrollBehaviour == _constants.SCROLLING_DOWN && currentScrollPosition > _constants.ROOT_ELEMENT.scrollHeight - _constants.ROOT_ELEMENT.clientHeight - 100) {
-                if (!placeHolderHidden) {
-                    _constants.PLACE_HOLDER_ELEMENT.style.opacity = 0;
-                    placeHolderHidden = true;
-                }
+                // if (!placeHolderHidden) {
+                //     PLACE_HOLDER_ELEMENT.style.opacity = 0;
+                //     placeHolderHidden = true;
+                // }
 
                 lastRenderUpdatePosition = currentScrollPosition;
                 scrollUpRenderLimit = lastRenderUpdatePosition - lastPageHeight;
@@ -953,10 +953,10 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
                 processRenderEngine(); // Processing DOM
             } else if (scrollBehaviour == _constants.SCROLLING_TOP && currentScrollPosition < scrollUpRenderLimit) {
 
-                if (placeHolderHidden) {
-                    _constants.PLACE_HOLDER_ELEMENT.style.opacity = 1;
-                    placeHolderHidden = false;
-                }
+                // if (placeHolderHidden) {
+                //     PLACE_HOLDER_ELEMENT.style.opacity = 1;
+                //     placeHolderHidden = false;
+                // }
 
                 lastRenderUpdatePosition = currentScrollPosition;
                 scrollUpRenderLimit = scrollUpRenderLimit - lastPageHeight;

@@ -644,10 +644,10 @@ const InfiniteScroll = (window, document) => {
         else {
 
             if (scrollBehaviour == SCROLLING_DOWN && currentScrollPosition > ROOT_ELEMENT.scrollHeight - ROOT_ELEMENT.clientHeight - 100) {
-                if (!placeHolderHidden) {
-                    PLACE_HOLDER_ELEMENT.style.opacity = 0;
-                    placeHolderHidden = true;
-                }
+                // if (!placeHolderHidden) {
+                //     PLACE_HOLDER_ELEMENT.style.opacity = 0;
+                //     placeHolderHidden = true;
+                // }
 
                 lastRenderUpdatePosition = currentScrollPosition;
                 scrollUpRenderLimit = lastRenderUpdatePosition-lastPageHeight;
@@ -664,10 +664,10 @@ const InfiniteScroll = (window, document) => {
             }
             else if (scrollBehaviour == SCROLLING_TOP && currentScrollPosition < scrollUpRenderLimit){
                 
-                if (placeHolderHidden) {
-                    PLACE_HOLDER_ELEMENT.style.opacity = 1;
-                    placeHolderHidden = false;
-                }
+                // if (placeHolderHidden) {
+                //     PLACE_HOLDER_ELEMENT.style.opacity = 1;
+                //     placeHolderHidden = false;
+                // }
 
                 lastRenderUpdatePosition = currentScrollPosition;
                 scrollUpRenderLimit = scrollUpRenderLimit-lastPageHeight;
