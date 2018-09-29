@@ -100,6 +100,7 @@ var LOADER_ELEMENT = document.getElementById('loader');
 // Constant limits
 var X_AXIS_POSITION_RANGE = 100;
 var Y_AXIS_POSITION_RANGE = 50;
+var SAFE_SCROLL_LIMIT = 250;
 var SAFE_ASYNC_TIMEOUT = 100;
 var SMOOTH_ASYNC_TIMEOUT = 200;
 var RETRY_API_FETCH_TIMEOUT = 15000;
@@ -178,6 +179,7 @@ exports.PLACE_HOLDER_ELEMENT = PLACE_HOLDER_ELEMENT;
 exports.LOADER_ELEMENT = LOADER_ELEMENT;
 exports.X_AXIS_POSITION_RANGE = X_AXIS_POSITION_RANGE;
 exports.Y_AXIS_POSITION_RANGE = Y_AXIS_POSITION_RANGE;
+exports.SAFE_SCROLL_LIMIT = SAFE_SCROLL_LIMIT;
 exports.SAFE_ASYNC_TIMEOUT = SAFE_ASYNC_TIMEOUT;
 exports.SMOOTH_ASYNC_TIMEOUT = SMOOTH_ASYNC_TIMEOUT;
 exports.RETRY_API_FETCH_TIMEOUT = RETRY_API_FETCH_TIMEOUT;
@@ -907,8 +909,8 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
         if (!lastRenderUpdatePosition) {
             lastRenderUpdatePosition = currentScrollPosition;
         } else {
-
-            if (scrollBehaviour == _constants.SCROLLING_DOWN && currentScrollPosition > _constants.ROOT_ELEMENT.scrollHeight - _constants.ROOT_ELEMENT.clientHeight - 100) {
+            var scrollLimit = _constants.ROOT_ELEMENT.scrollHeight - _constants.ROOT_ELEMENT.clientHeight - _constants.SAFE_SCROLL_LIMIT;
+            if (scrollBehaviour == _constants.SCROLLING_DOWN && currentScrollPosition > scrollLimit) {
                 lastRenderUpdatePosition = currentScrollPosition;
                 scrollUpRenderLimit = lastRenderUpdatePosition - lastPageHeight;
 
@@ -944,6 +946,13 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
             }
             applyPadding(currentContentPaddingTop);
             scrollUpRenderLimit = currentContentPaddingTop;
+        }
+
+        if (scrollUpRenderLimit < 0 || scrollPosition == 0) {
+            scrollUpRenderLimit = 1;
+            if (activeViewportPages[0] != 1) {
+                prependNewPage();
+            }
         }
     };
 

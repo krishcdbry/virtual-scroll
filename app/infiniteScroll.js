@@ -17,6 +17,7 @@ import {
 
     X_AXIS_POSITION_RANGE,
     Y_AXIS_POSITION_RANGE,
+    SAFE_SCROLL_LIMIT,
     SAFE_ASYNC_TIMEOUT,
     SMOOTH_ASYNC_TIMEOUT,
     RETRY_API_FETCH_TIMEOUT,
@@ -617,8 +618,8 @@ const InfiniteScroll = (window, document) => {
             lastRenderUpdatePosition = currentScrollPosition;
         }
         else {
-
-            if (scrollBehaviour == SCROLLING_DOWN && currentScrollPosition > ROOT_ELEMENT.scrollHeight - ROOT_ELEMENT.clientHeight - 100) {
+            let scrollLimit = ROOT_ELEMENT.scrollHeight - ROOT_ELEMENT.clientHeight - SAFE_SCROLL_LIMIT;
+            if (scrollBehaviour == SCROLLING_DOWN && currentScrollPosition > scrollLimit) {
                 lastRenderUpdatePosition = currentScrollPosition;
                 scrollUpRenderLimit = lastRenderUpdatePosition-lastPageHeight;
                
