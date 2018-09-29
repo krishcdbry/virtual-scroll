@@ -513,6 +513,7 @@ const InfiniteScroll = (window, document) => {
             idx++;
         }
         LOADER_ELEMENT.appendChild(documentFragment);
+        LOADER_ELEMENT.style.opacity = 1;
         loaderRendered = true;
         PLACE_HOLDER_ELEMENT.remove();
     }
@@ -552,7 +553,7 @@ const InfiniteScroll = (window, document) => {
             return;
         }
         apiFetchInProgress = true;
-        let url = `${apiEnd}?limit=${apiPageLimit}`;
+        let url = `${apiEnd}/messages?limit=${apiPageLimit}`;
         if (apiPageToken) {
             url += `&pageToken=${apiPageToken}`;
         }

@@ -87,7 +87,7 @@ var CLASSNAME_USER_DATA = "name-section";
 var CLASSNAME_USERNAME = "username";
 var CLASSNAME_TIMESTAMP = "timestamp";
 
-var API_PATH = window.location.protocol + "//message-list.appspot.com/messages";
+var API_PATH = window.location.protocol + "//message-list.appspot.com";
 var API_LIMIT = 50;
 
 // DOM Element references
@@ -806,6 +806,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
             idx++;
         }
         _constants.LOADER_ELEMENT.appendChild(documentFragment);
+        _constants.LOADER_ELEMENT.style.opacity = 1;
         loaderRendered = true;
         _constants.PLACE_HOLDER_ELEMENT.remove();
     };
@@ -845,7 +846,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
             return;
         }
         apiFetchInProgress = true;
-        var url = apiEnd + '?limit=' + apiPageLimit;
+        var url = apiEnd + '/messages?limit=' + apiPageLimit;
         if (apiPageToken) {
             url += '&pageToken=' + apiPageToken;
         }
