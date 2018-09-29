@@ -657,6 +657,13 @@ const InfiniteScroll = (window, document) => {
             applyPadding(currentContentPaddingTop);
             scrollUpRenderLimit = currentContentPaddingTop;                  
         }
+
+        if (scrollUpRenderLimit < 0 || scrollPosition == 0) {
+            scrollUpRenderLimit =  1;
+            if (activeViewportPages[0] != 1) {
+                prependNewPage();
+            }
+        }
     }
 
     /**
