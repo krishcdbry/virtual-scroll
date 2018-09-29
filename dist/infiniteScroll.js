@@ -647,7 +647,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
     var processRenderEngine = function processRenderEngine() {
         var direction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _constants.LOAD_BOTTOM;
 
-        var sectionElements = document.getElementsByTagName('section');
+        var sectionElements = document.getElementsByClassName('page');
         var sectionItem = sectionElements[0],
             newtranslateYTop = lastSectionHeight = sectionItem.offsetHeight;
 
@@ -696,8 +696,9 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
      */
     var prepareListItem = function prepareListItem(list, pageId) {
         var documentFragment = document.createDocumentFragment();
-        var listPage = document.createElement('section');
+        var listPage = document.createElement('div');
         listPage.id = pageId;
+        listPage.className = "page";
         var pageItems = [];
 
         var _iteratorNormalCompletion = true;
@@ -912,7 +913,6 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
         if (!lastRenderUpdatePosition) {
             lastRenderUpdatePosition = currentScrollPosition;
         } else {
-
             if (totalPageCount < 3) {
                 scrollDownRenderLimit = lastRenderUpdatePosition + lastSectionHeight / 3;
             } else if (totalPageCount == 3) {

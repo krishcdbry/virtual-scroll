@@ -372,7 +372,7 @@ const InfiniteScroll = (window, document) => {
      * @argument {String} direction 
      */
     const processRenderEngine = (direction = LOAD_BOTTOM) => {
-        let sectionElements = document.getElementsByTagName('section');
+        let sectionElements = document.getElementsByClassName('page');
         let sectionItem = sectionElements[0],
         newtranslateYTop = lastSectionHeight = sectionItem.offsetHeight;
 
@@ -424,8 +424,9 @@ const InfiniteScroll = (window, document) => {
      */
     const prepareListItem = (list, pageId) => {
         let documentFragment = document.createDocumentFragment();
-        let listPage = document.createElement('section');
+        let listPage = document.createElement('div');
         listPage.id = pageId
+        listPage.className = "page";
         let pageItems = [];
 
         for (let item of list) {
@@ -623,7 +624,6 @@ const InfiniteScroll = (window, document) => {
             lastRenderUpdatePosition = currentScrollPosition;
         }
         else {
-
             if (totalPageCount < 3) {
                 scrollDownRenderLimit = lastRenderUpdatePosition+(lastSectionHeight/3);
             }
@@ -663,6 +663,8 @@ const InfiniteScroll = (window, document) => {
                 processRenderEngine(LOAD_TOP);   // Processing DOM
             }
         }
+
+        
     };
 
     /**
