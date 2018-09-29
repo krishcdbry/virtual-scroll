@@ -522,8 +522,7 @@ const InfiniteScroll = (window, document) => {
         }
         LOADER_ELEMENT.appendChild(documentFragment);
         loaderRendered = true;
-        PLACE_HOLDER_ELEMENT.style.opacity = 0;
-        placeHolderHidden = true;
+        PLACE_HOLDER_ELEMENT.remove();
     }
 
     /**

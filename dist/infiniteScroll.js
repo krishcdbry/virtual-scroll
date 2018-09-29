@@ -815,8 +815,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
         }
         _constants.LOADER_ELEMENT.appendChild(documentFragment);
         loaderRendered = true;
-        _constants.PLACE_HOLDER_ELEMENT.style.opacity = 0;
-        placeHolderHidden = true;
+        _constants.PLACE_HOLDER_ELEMENT.remove();
     };
 
     /**
