@@ -523,6 +523,7 @@ const InfiniteScroll = (window, document) => {
      * @returns {Boolean}
      */
     const loadMorePages = () => {
+        console.log(`Viewport pages ${activeViewportPages}`)
         if (activeViewportPages.length > 2) {
             if (totalPageCount > activeViewportPages[2]+3) {
                 return false;
@@ -681,7 +682,9 @@ const InfiniteScroll = (window, document) => {
             scrollDownRenderLimit = scrollPosition+lastSectionHeight;                   
         }
 
-        if (scrollUpRenderLimit < 0) {
+        console.log(` Upper limit ${scrollUpRenderLimit} | Lower limit ${scrollDownRenderLimit}`)
+
+        if (scrollUpRenderLimit < 0 || scrollPosition == 0) {
             scrollUpRenderLimit =  1;
             if (activeViewportPages[0] != 1) {
                 prependNewPage();
