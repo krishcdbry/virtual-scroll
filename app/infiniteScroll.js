@@ -68,10 +68,12 @@ const InfiniteScroll = (window, document) => {
     let localMessageStore = {};
     let totalMessageItems = 0;
     let contentTransforms = [];
-    let lastSectionHeight = 0;
-    let currentContentTranslateY = 0;
+    let lastPageHeight = 0;
+    let currentContentPaddingTop = 0;
     let stopProcessing = false;
     let loaderRendered = false;
+    let placeHolderHidden = false;
+    let processRendering = false;
 
     // Scroll Props
     let isScrolling = false;
@@ -329,13 +331,16 @@ const InfiniteScroll = (window, document) => {
 
 
     /**
-     * @name applyTransform
+     * @name applyPadding
      * @description Applying transformation on every animation frame
      * @param {number} Ypos
      */
-    const applyTransform = (YPos) => {
+    const applyPadding = (YPos) => {
+        if (YPos < 200) {
+            YPos = 0;
+        }
         window.requestAnimationFrame(() => {
-            CONTENT_ELEMENT.style.transform = `translate3d(0,${YPos}px, 0)`;
+            CONTENT_ELEMENT.style.paddingTop = YPos+"px";
         })
     }
 
@@ -346,10 +351,15 @@ const InfiniteScroll = (window, document) => {
      * @param {*} translateY 
      */
     const removeFirstPage = (page, translateY) => {
+        console.log("Removing Page", page, translateY);
         page.parentNode.removeChild(page);
-        currentContentTranslateY = translateY;
-        applyTransform(translateY);
+        currentContentPaddingTop = translateY;
+        applyPadding(translateY);
         activeViewportPages.shift();
+        setTimeout(() => {
+            processRendering = false;
+            console.log("Process Rendering False");
+        }, 100);
     }
 
     /**
@@ -360,9 +370,13 @@ const InfiniteScroll = (window, document) => {
      */
     const removeLastPage = (page, translateY) => {
         page.parentNode.removeChild(page);
-        currentContentTranslateY = translateY;
-        applyTransform(translateY);
+        currentContentPaddingTop = translateY;
+        applyPadding(translateY);
         activeViewportPages.pop();
+        setTimeout(() => {
+            processRendering = false;
+            console.log("Process Rendering False");
+        }, 100);
     }
 
     /**
@@ -372,45 +386,47 @@ const InfiniteScroll = (window, document) => {
      * @argument {String} direction 
      */
     const processRenderEngine = (direction = LOAD_BOTTOM) => {
+        if (processRendering) {
+            return;
+        }
+    
         let sectionElements = document.getElementsByClassName('page');
         let sectionItem = sectionElements[0],
-        newtranslateYTop = lastSectionHeight = sectionItem.offsetHeight;
+        newPaddingTop = lastPageHeight = sectionItem.offsetHeight;
+
+        console.log("TotalPageCount", totalPageCount, direction);
 
         if (direction == LOAD_BOTTOM && totalPageCount > 2) {
+            processRendering = true;
             if (activeViewportPages[2] < totalPageCount) {
                 appendNewPage();
             }
 
-            if(currentContentTranslateY > 0) {
-                newtranslateYTop = Number(currentContentTranslateY)+Number(lastSectionHeight);
+            if(currentContentPaddingTop > 0) {
+                newPaddingTop = Number(currentContentPaddingTop)+Number(lastPageHeight);
             }
-
-            contentTransforms.push(lastSectionHeight);
 
             if (activeViewportPages.length > 2) {
                 // Removing page from top
-                removeFirstPage(sectionItem, newtranslateYTop);
+                console.log("Removing section Item", sectionItem, newPaddingTop);
+                removeFirstPage(sectionItem, newPaddingTop);
             }
         }
         else {
+           
             if (activeViewportPages[0] == 1) {
                 return;
             }
+            processRendering = true;
 
             prependNewPage();
 
-            newtranslateYTop = currentContentTranslateY - ((contentTransforms.length > 0) 
+            newPaddingTop = currentContentPaddingTop - ((contentTransforms.length > 0) 
                                                         ? contentTransforms.pop() 
-                                                        : lastSectionHeight);
-            if (newtranslateYTop < 0) {
-                if (!document.getElementById('p1')) {
-                    newtranslateYTop = 0;
-                }
-            }
-
+                                                        : lastPageHeight);
             // Removing pages from bottom
             if (activeViewportPages.length > 2) {
-                removeLastPage(sectionElements[sectionElements.length-1], newtranslateYTop);
+                removeLastPage(sectionElements[sectionElements.length-1], newPaddingTop);
             }
         }
     }
@@ -506,6 +522,8 @@ const InfiniteScroll = (window, document) => {
         }
         LOADER_ELEMENT.appendChild(documentFragment);
         loaderRendered = true;
+        PLACE_HOLDER_ELEMENT.style.opacity = 0;
+        placeHolderHidden = true;
     }
 
     /**
@@ -524,9 +542,9 @@ const InfiniteScroll = (window, document) => {
      * @returns {Boolean}
      */
     const loadMorePages = () => {
-        console.log(`Viewport pages ${activeViewportPages}`)
-        if (activeViewportPages.length > 2) {
-            if (totalPageCount > activeViewportPages[2]+3) {
+        console.log(activeViewportPages, totalPageCount);
+        if (totalPageCount > 2 && activeViewportPages.length > 2) {
+            if (activeViewportPages[2] != totalPageCount) {
                 return false;
             }
         }
@@ -541,7 +559,7 @@ const InfiniteScroll = (window, document) => {
     const isDirectRender = () => {
         if(totalPageCount > 3 && activeViewportPages.length >= 3) {
             if (totalPageCount > activeViewportPages[2]) {
-                return false;
+                //return false;
             }
         }
         return true;
@@ -624,26 +642,16 @@ const InfiniteScroll = (window, document) => {
             lastRenderUpdatePosition = currentScrollPosition;
         }
         else {
-            if (totalPageCount < 3) {
-                scrollDownRenderLimit = lastRenderUpdatePosition+(lastSectionHeight/3);
-            }
-            else if (totalPageCount == 3) {
-                scrollDownRenderLimit = lastRenderUpdatePosition+lastSectionHeight;
-            }
 
-            if (scrollBehaviour == SCROLLING_DOWN && isPreFetchData()) {
-                fetchData(); 
-            }
-
-            // If scroll position is greator than UPPER LIMIT and more than one section of messages (lastSectionHeight)
-            if (scrollBehaviour == SCROLLING_DOWN && currentScrollPosition > scrollDownRenderLimit && currentScrollPosition > lastSectionHeight) {
-                lastRenderUpdatePosition = currentScrollPosition;
-                
-                if (totalPageCount > 2) { 
-                    scrollDownRenderLimit = scrollDownRenderLimit+lastSectionHeight;
-                    scrollUpRenderLimit = lastRenderUpdatePosition;
+            if (scrollBehaviour == SCROLLING_DOWN && currentScrollPosition > ROOT_ELEMENT.scrollHeight - ROOT_ELEMENT.clientHeight - 100) {
+                if (!placeHolderHidden) {
+                    PLACE_HOLDER_ELEMENT.style.opacity = 0;
+                    placeHolderHidden = true;
                 }
 
+                lastRenderUpdatePosition = currentScrollPosition;
+                scrollUpRenderLimit = lastRenderUpdatePosition-lastPageHeight;
+               
                 if (loadMorePages()) {
                     fetchData();   // Fetches more pages
                 }
@@ -655,11 +663,14 @@ const InfiniteScroll = (window, document) => {
                 processRenderEngine();   // Processing DOM
             }
             else if (scrollBehaviour == SCROLLING_TOP && currentScrollPosition < scrollUpRenderLimit){
+                
+                if (placeHolderHidden) {
+                    PLACE_HOLDER_ELEMENT.style.opacity = 1;
+                    placeHolderHidden = false;
+                }
 
                 lastRenderUpdatePosition = currentScrollPosition;
-                scrollUpRenderLimit = scrollUpRenderLimit-lastSectionHeight;
-                scrollDownRenderLimit = lastRenderUpdatePosition;
-
+                scrollUpRenderLimit = scrollUpRenderLimit-lastPageHeight;
                 processRenderEngine(LOAD_TOP);   // Processing DOM
             }
         }
@@ -674,22 +685,21 @@ const InfiniteScroll = (window, document) => {
      */
     const handleScrollEnd = (e) => {
         let scrollPosition = e.target.scrollTop;
-        if (scrollPosition < currentContentTranslateY || currentContentTranslateY < 0) {
-            currentContentTranslateY = scrollPosition
-            if (scrollPosition  > lastSectionHeight) {
-                currentContentTranslateY = scrollPosition-lastSectionHeight || 1;
+        console.log(scrollPosition, currentContentPaddingTop);
+        if (scrollPosition < currentContentPaddingTop || currentContentPaddingTop < 0) {
+            currentContentPaddingTop = scrollPosition
+            if (scrollPosition  > lastPageHeight) {
+                currentContentPaddingTop = scrollPosition-lastPageHeight || 1;
             }
-            applyTransform(currentContentTranslateY);
-            scrollUpRenderLimit = currentContentTranslateY;
-            scrollDownRenderLimit = scrollPosition+lastSectionHeight;                   
+            applyPadding(currentContentPaddingTop);
+            scrollUpRenderLimit = currentContentPaddingTop;                  
         }
-
-        console.log(` Upper limit ${scrollUpRenderLimit} | Lower limit ${scrollDownRenderLimit}`)
 
         if (scrollUpRenderLimit < 0 || scrollPosition == 0) {
             scrollUpRenderLimit =  1;
             if (activeViewportPages[0] != 1) {
-                prependNewPage();
+                console.log("trying");
+                //prependNewPage();
             }
         }
     }

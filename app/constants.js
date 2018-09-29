@@ -13,7 +13,7 @@ const CLASSNAME_USERNAME = "username";
 const CLASSNAME_TIMESTAMP = "timestamp";
 
 const API_PATH = `${window.location.protocol}//message-list.appspot.com`;
-const API_LIMIT = 100;
+const API_LIMIT = 50;
 
 // DOM Element references
 const ROOT_ELEMENT = document.getElementById('container');
