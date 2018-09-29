@@ -12,7 +12,7 @@ const CLASSNAME_USER_DATA = "name-section";
 const CLASSNAME_USERNAME = "username";
 const CLASSNAME_TIMESTAMP = "timestamp";
 
-const API_PATH = `${window.location.protocol}//message-list.appspot.com`;
+const API_PATH = `${window.location.protocol}//message-list.appspot.com/messages`;
 const API_LIMIT = 50;
 
 // DOM Element references

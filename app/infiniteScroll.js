@@ -72,7 +72,6 @@ const InfiniteScroll = (window, document) => {
     let currentContentPaddingTop = 0;
     let stopProcessing = false;
     let loaderRendered = false;
-    let placeHolderHidden = false;
     let processRendering = false;
 
     // Scroll Props
@@ -80,7 +79,6 @@ const InfiniteScroll = (window, document) => {
     let currentScrollPosition = 0;
     let previousScrollPosition = 0;
     let lastRenderUpdatePosition = 0;
-    let scrollDownRenderLimit = 0;
     let scrollUpRenderLimit = 0;
     
     let animationFrameProcessing = false;
@@ -162,7 +160,6 @@ const InfiniteScroll = (window, document) => {
         let parent = element.parentNode;
         spliceItem(parent.id, element.id);
         let elementHeight = element.offsetHeight;
-        scrollDownRenderLimit -= elementHeight;
         scrollUpRenderLimit -= elementHeight;
         currentSwipeElement = null;
         element.remove();
@@ -254,7 +251,7 @@ const InfiniteScroll = (window, document) => {
         if (!touchStartPosition.x) {
             return;
         }
-
+        
         touchLastPosition = GET_INTERACTION_POINT(event);
 
         if (animationFrameProcessing) {
@@ -358,7 +355,6 @@ const InfiniteScroll = (window, document) => {
         activeViewportPages.shift();
         setTimeout(() => {
             processRendering = false;
-            console.log("Process Rendering False");
         }, 100);
     }
 
@@ -375,7 +371,6 @@ const InfiniteScroll = (window, document) => {
         activeViewportPages.pop();
         setTimeout(() => {
             processRendering = false;
-            console.log("Process Rendering False");
         }, 100);
     }
 
@@ -394,8 +389,6 @@ const InfiniteScroll = (window, document) => {
         let sectionItem = sectionElements[0],
         newPaddingTop = lastPageHeight = sectionItem.offsetHeight;
 
-        console.log("TotalPageCount", totalPageCount, direction);
-
         if (direction == LOAD_BOTTOM && totalPageCount > 2) {
             processRendering = true;
             if (activeViewportPages[2] < totalPageCount) {
@@ -408,7 +401,6 @@ const InfiniteScroll = (window, document) => {
 
             if (activeViewportPages.length > 2) {
                 // Removing page from top
-                console.log("Removing section Item", sectionItem, newPaddingTop);
                 removeFirstPage(sectionItem, newPaddingTop);
             }
         }
@@ -551,21 +543,6 @@ const InfiniteScroll = (window, document) => {
     }
 
     /**
-     * @name isDirectRender
-     * @description Checking the need for direct render ater fetching data from API, depends on the user scroll interaction.
-     * @returns {Boolean}
-     */
-    const isDirectRender = () => {
-        if(totalPageCount > 3 && activeViewportPages.length >= 3) {
-            if (totalPageCount > activeViewportPages[2]) {
-                //return false;
-            }
-        }
-        return true;
-    }
-
-
-    /**
      * @name fetchData
      * @description API fetching using the JS Fetch
      * @returns {Boolean}
@@ -575,37 +552,35 @@ const InfiniteScroll = (window, document) => {
             return;
         }
         apiFetchInProgress = true;
-        let url = apiEnd+'/messages?limit='+apiPageLimit;
+        let url = `${apiEnd}?limit=${apiPageLimit}`;
         if (apiPageToken) {
-            url += '&pageToken='+apiPageToken
+            url += `&pageToken=${apiPageToken}`;
         }
         apiPageToken = null;
         fetch(url)
-        .then(res => res.json())
-        .then(res => {
-            if (!res.messages) {
-                stopProcessing = true;
-                return
-            }
-            apiFetchInProgress = false;
-            totalPageCount++;
-            apiPageToken = res.pageToken; 
-            totalMessageItems += res.messages.length;
-            preCacheList(totalPageCount, res.messages);
-            if(isDirectRender()) {
+            .then(res => res.json())
+            .then(res => {
+                if (!res.messages) {
+                    stopProcessing = true;
+                    return
+                }
+                apiFetchInProgress = false;
+                totalPageCount++;
+                apiPageToken = res.pageToken; 
+                totalMessageItems += res.messages.length;
+                preCacheList(totalPageCount, res.messages);
                 prepareAndRenderListItem(res.messages, totalPageCount);
-            }
-            if (!loaderRendered) {
-                renderLoader();
-            }
-        })
-        .catch(err => {
-            stopProcessing = true;
-            apiFetchInProgress = false;
-            setTimeout(() => {
-                fetchData()
-            }, RETRY_API_FETCH_TIMEOUT)
-        })
+                if (!loaderRendered) {
+                    renderLoader();
+                }
+            })
+            .catch(err => {
+                stopProcessing = true;
+                apiFetchInProgress = false;
+                setTimeout(() => {
+                    fetchData()
+                }, RETRY_API_FETCH_TIMEOUT)
+            })
     }
 
 
@@ -621,7 +596,7 @@ const InfiniteScroll = (window, document) => {
     /**
      * @name rootScrollHandler
      * @description Scroll event handler 
-     * It triggers whenever the user scrolls, It maintains 2 keys scrollDownRenderLimit, scrollUpRenderLimit
+     * It triggers whenever the user scrolls, It maintains 2 keys  scrollUpRenderLimit
      * Depends on these it decides wether to process upper section, bottom section and also triggers fetching more data
      * @param {Boolean} TOP 
      */
@@ -643,11 +618,6 @@ const InfiniteScroll = (window, document) => {
         else {
 
             if (scrollBehaviour == SCROLLING_DOWN && currentScrollPosition > ROOT_ELEMENT.scrollHeight - ROOT_ELEMENT.clientHeight - 100) {
-                // if (!placeHolderHidden) {
-                //     PLACE_HOLDER_ELEMENT.style.opacity = 0;
-                //     placeHolderHidden = true;
-                // }
-
                 lastRenderUpdatePosition = currentScrollPosition;
                 scrollUpRenderLimit = lastRenderUpdatePosition-lastPageHeight;
                
@@ -662,12 +632,6 @@ const InfiniteScroll = (window, document) => {
                 processRenderEngine();   // Processing DOM
             }
             else if (scrollBehaviour == SCROLLING_TOP && currentScrollPosition < scrollUpRenderLimit){
-                
-                // if (placeHolderHidden) {
-                //     PLACE_HOLDER_ELEMENT.style.opacity = 1;
-                //     placeHolderHidden = false;
-                // }
-
                 lastRenderUpdatePosition = currentScrollPosition;
                 scrollUpRenderLimit = scrollUpRenderLimit-lastPageHeight;
                 processRenderEngine(LOAD_TOP);   // Processing DOM
@@ -684,7 +648,6 @@ const InfiniteScroll = (window, document) => {
      */
     const handleScrollEnd = (e) => {
         let scrollPosition = e.target.scrollTop;
-        console.log(scrollPosition, currentContentPaddingTop);
         if (scrollPosition < currentContentPaddingTop || currentContentPaddingTop < 0) {
             currentContentPaddingTop = scrollPosition
             if (scrollPosition  > lastPageHeight) {
@@ -692,14 +655,6 @@ const InfiniteScroll = (window, document) => {
             }
             applyPadding(currentContentPaddingTop);
             scrollUpRenderLimit = currentContentPaddingTop;                  
-        }
-
-        if (scrollUpRenderLimit < 0 || scrollPosition == 0) {
-            scrollUpRenderLimit =  1;
-            if (activeViewportPages[0] != 1) {
-                console.log("trying");
-                //prependNewPage();
-            }
         }
     }
 
