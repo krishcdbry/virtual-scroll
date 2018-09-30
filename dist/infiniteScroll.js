@@ -284,10 +284,6 @@ exports.getIndexOfkey = getIndexOfkey;
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
 var _constants = __webpack_require__(0);
 
 var _utils = __webpack_require__(1);
@@ -295,11 +291,11 @@ var _utils = __webpack_require__(1);
 var _domUtils = __webpack_require__(3);
 
 /**
- * @name InfiniteScroll
+ * @name InfiniteScrollLib
  * @param {*} window 
  * @param {*} document 
  */
-var InfiniteScroll = function InfiniteScroll(window, document) {
+var InfiniteScrollLib = function InfiniteScrollLib(window, document) {
 
     // Window measurments 
     var windowWidth = window.innerWidth;
@@ -1004,7 +1000,17 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
     };
 };
 
-exports.default = InfiniteScroll;
+/**
+ * @name _IS
+ * @description ES6 Infinite Scroll Plugin - Added to window which can be accessed globally.
+ */
+try {
+
+    window._IS = InfiniteScrollLib(window, document);
+} catch (Error) {
+
+    console.error("Error loading plugin", Error);
+}
 
 /***/ }),
 /* 3 */

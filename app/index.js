@@ -43,11 +43,11 @@ import {
 
 
 /**
- * @name InfiniteScroll
+ * @name InfiniteScrollLib
  * @param {*} window 
  * @param {*} document 
  */
-const InfiniteScroll = (window, document) => {
+const InfiniteScrollLib = (window, document) => {
 
     // Window measurments 
     let windowWidth = window.innerWidth;
@@ -736,4 +736,18 @@ const InfiniteScroll = (window, document) => {
 }
 
 
-export default InfiniteScroll;
+
+/**
+ * @name _IS
+ * @description ES6 Infinite Scroll Plugin - Added to window which can be accessed globally.
+ */
+try {
+    
+    window._IS = InfiniteScrollLib(window, document);
+
+} catch (Error) {
+
+    console.error("Error loading plugin", Error);
+
+}
+

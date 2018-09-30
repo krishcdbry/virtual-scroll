@@ -24,8 +24,7 @@
     <script type="text/javascript" src="dist/infiniteScroll.min.js"></script>
     <script>
         window.addEventListener('load', () => {
-            window.IS = InfiniteScroll(window, document);
-            IS.init();
+            window._IS.init();  // Takes default props or else can be extended with { limit : pagelength }, { api : apiPath }
         });
     </script>
 </body>
