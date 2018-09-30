@@ -643,9 +643,6 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
         currentContentPaddingTop = translateY;
         applyPadding(translateY);
         activeViewportPages.pop();
-        setTimeout(function () {
-            processRendering = false;
-        }, 100);
     };
 
     /**
@@ -666,6 +663,9 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
             newPaddingTop = lastPageHeight = sectionItem.offsetHeight;
 
         if (direction == _constants.LOAD_BOTTOM && totalPageCount > 2) {
+            if (processRendering) {
+                return;
+            }
             processRendering = true;
             if (activeViewportPages[2] < totalPageCount) {
                 appendNewPage();
@@ -678,13 +678,14 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
             if (activeViewportPages.length > 2) {
                 // Removing page from top
                 removeFirstPage(sectionItem, newPaddingTop);
+            } else {
+                processRendering = false;
             }
         } else {
 
             if (activeViewportPages[0] == 1) {
                 return;
             }
-            processRendering = true;
 
             prependNewPage();
 
@@ -828,9 +829,9 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
      * @returns {Boolean}
      */
     var loadMorePages = function loadMorePages() {
-        console.log("Load more ? ", activeViewportPages, totalPageCount);
-        if (totalPageCount > 2 && activeViewportPages.length > 2) {
-            if (activeViewportPages[2] != totalPageCount) {
+        var activeLen = activeViewportPages.length;
+        if (totalPageCount > 2 && activeLen > 2) {
+            if (activeViewportPages[activeLen - 1] != totalPageCount) {
                 return false;
             }
         }
@@ -947,10 +948,11 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
             scrollUpRenderLimit = currentContentPaddingTop;
         }
 
-        if (scrollUpRenderLimit < 0 || scrollPosition == 0) {
-            scrollUpRenderLimit = 1;
+        if (scrollUpRenderLimit < 0 || scrollPosition < 100) {
+            scrollUpRenderLimit = 0;
             if (activeViewportPages[0] != 1) {
                 prependNewPage();
+                activeViewportPages.unshift(1);
             }
         }
     };
