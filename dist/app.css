@@ -125,7 +125,6 @@ html,body {
       -ms-transition: transform 0.2s, height 0.2s ease-in;
       overflow: auto;
       user-select: none;
-      touch-action: none;
   }
   
   .card.remove {
