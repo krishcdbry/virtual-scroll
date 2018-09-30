@@ -102,7 +102,25 @@ const prepareStoryElement = (item, page) => {
 }
 
 
+ /**
+ * @name renderLoaderAnim
+ * @description rendering the placeholder cards for better UX
+ * @argument {Number} limit 
+ */
+const renderLoaderAnim = () => {
+    let loaderAnim = document.createElement('div'),
+        divChild = document.createElement('div'),
+        divChild2 = document.createElement('div'),
+        divChild3 = document.createElement('div');
+    loaderAnim.className = "loader-anim";
+    loaderAnim.appendChild(divChild);
+    loaderAnim.appendChild(divChild2);
+    loaderAnim.appendChild(divChild3);
+    return loaderAnim;
+}
+
 export {
     prepareStoryElement,
-    prepareAuthorInfoElement
+    prepareAuthorInfoElement,
+    renderLoaderAnim
 }

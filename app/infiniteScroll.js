@@ -37,7 +37,8 @@ import {
 
 import {
     prepareStoryElement,
-    prepareAuthorInfoElement
+    prepareAuthorInfoElement,
+    renderLoaderAnim
 } from './domUtils';
 
 
@@ -474,6 +475,7 @@ const InfiniteScroll = (window, document) => {
         activeViewportPages.push(totalPageCount);
     }
 
+
     /**
      * @name renderPlaceHolder
      * @description rendering the placeholder cards for better UX
@@ -495,6 +497,7 @@ const InfiniteScroll = (window, document) => {
             documentFragment.appendChild(listElem);
             idx++;
         }
+        PLACE_HOLDER_ELEMENT.appendChild(renderLoaderAnim());
         PLACE_HOLDER_ELEMENT.appendChild(documentFragment);
     }
 
@@ -518,10 +521,11 @@ const InfiniteScroll = (window, document) => {
             documentFragment.appendChild(listElem);
             idx++;
         }
+        LOADER_ELEMENT.appendChild(renderLoaderAnim());
         LOADER_ELEMENT.appendChild(documentFragment);
         LOADER_ELEMENT.style.opacity = 1;
         loaderRendered = true;
-        PLACE_HOLDER_ELEMENT.remove();
+        // PLACE_HOLDER_ELEMENT.remove();
     }
 
     /**
@@ -718,7 +722,7 @@ const InfiniteScroll = (window, document) => {
      */
     const _init = (configObj = {}) => {
         extendConfig(configObj);
-        renderPlaceHolder(3);
+        renderPlaceHolder(1);
         addEventListeners();
         fetchData();
     }

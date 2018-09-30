@@ -789,6 +789,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
             documentFragment.appendChild(listElem);
             idx++;
         }
+        _constants.PLACE_HOLDER_ELEMENT.appendChild((0, _domUtils.renderLoaderAnim)());
         _constants.PLACE_HOLDER_ELEMENT.appendChild(documentFragment);
     };
 
@@ -812,10 +813,11 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
             documentFragment.appendChild(listElem);
             idx++;
         }
+        _constants.LOADER_ELEMENT.appendChild((0, _domUtils.renderLoaderAnim)());
         _constants.LOADER_ELEMENT.appendChild(documentFragment);
         _constants.LOADER_ELEMENT.style.opacity = 1;
         loaderRendered = true;
-        _constants.PLACE_HOLDER_ELEMENT.remove();
+        // PLACE_HOLDER_ELEMENT.remove();
     };
 
     /**
@@ -1009,7 +1011,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
         var configObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
         extendConfig(configObj);
-        renderPlaceHolder(3);
+        renderPlaceHolder(1);
         addEventListeners();
         fetchData();
     };
@@ -1031,7 +1033,7 @@ exports.default = InfiniteScroll;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.prepareAuthorInfoElement = exports.prepareStoryElement = undefined;
+exports.renderLoaderAnim = exports.prepareAuthorInfoElement = exports.prepareStoryElement = undefined;
 
 var _utils = __webpack_require__(1);
 
@@ -1126,8 +1128,26 @@ var prepareStoryElement = function prepareStoryElement(item, page) {
     return storyElement;
 };
 
+/**
+* @name renderLoaderAnim
+* @description rendering the placeholder cards for better UX
+* @argument {Number} limit 
+*/
+var renderLoaderAnim = function renderLoaderAnim() {
+    var loaderAnim = document.createElement('div'),
+        divChild = document.createElement('div'),
+        divChild2 = document.createElement('div'),
+        divChild3 = document.createElement('div');
+    loaderAnim.className = "loader-anim";
+    loaderAnim.appendChild(divChild);
+    loaderAnim.appendChild(divChild2);
+    loaderAnim.appendChild(divChild3);
+    return loaderAnim;
+};
+
 exports.prepareStoryElement = prepareStoryElement;
 exports.prepareAuthorInfoElement = prepareAuthorInfoElement;
+exports.renderLoaderAnim = renderLoaderAnim;
 
 /***/ })
 /******/ ]);
