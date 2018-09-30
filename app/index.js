@@ -124,9 +124,7 @@ const InfiniteScrollLib = (window, document) => {
      */
     const isXAxisInRange = (xPos) => {
         let {x} = touchStartPosition; 
-        let minSpaceCorner = windowWidth-65;
         let distance = (xPos > x) ? xPos-x : x-xPos;
-        let time = swipeTimeTaken();
         return distance > X_AXIS_POSITION_RANGE;
     }
 
@@ -241,7 +239,7 @@ const InfiniteScrollLib = (window, document) => {
         if (event.touches && event.touches.length > 1) {
             return;
         }
-        touchStartPosition = GET_INTERACTION_POINT(event);
+        L = GET_INTERACTION_POINT(event);
     }
 
     /**

@@ -374,9 +374,7 @@ var InfiniteScrollLib = function InfiniteScrollLib(window, document) {
         var _touchStartPosition = touchStartPosition,
             x = _touchStartPosition.x;
 
-        var minSpaceCorner = windowWidth - 65;
         var distance = xPos > x ? xPos - x : x - xPos;
-        var time = swipeTimeTaken();
         return distance > _constants.X_AXIS_POSITION_RANGE;
     };
 
@@ -492,7 +490,7 @@ var InfiniteScrollLib = function InfiniteScrollLib(window, document) {
         if (event.touches && event.touches.length > 1) {
             return;
         }
-        touchStartPosition = (0, _constants.GET_INTERACTION_POINT)(event);
+        L = (0, _constants.GET_INTERACTION_POINT)(event);
     };
 
     /**
