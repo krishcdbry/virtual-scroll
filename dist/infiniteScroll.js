@@ -455,7 +455,7 @@ var InfiniteScrollLib = function InfiniteScrollLib(window, document) {
      * @returns NULL
      */
     var resetElementPosition = function resetElementPosition() {
-        var transform = 'translate(0,0)';
+        var transform = 'translate3d(0,0,0)';
         currentSwipeElement.style.transform = transform;
         currentSwipeElement.style.webkitTransform = transform;
         currentSwipeElement.style.MozTransform = transform;

@@ -115,6 +115,10 @@ html,body {
       border-radius: 2px;
       background-color: #ffffff;
       will-change: transform height;
+      transform: translate3d(0,0,0);
+      -webkit-transform: translate3d(0,0,0);
+      -ms-transform: translate3d(0,0,0);
+      -moz-transform: translate3d(0,0,0);
       transition: transform 0.2s, height 0.2s ease-in;
       -webkit-transition: transform 0.2s, height 0.2s ease-in;
       -moz-transition: transform 0.2s, height 0.2s ease-in;
