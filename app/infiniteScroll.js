@@ -607,7 +607,7 @@ const InfiniteScroll = (window, document) => {
     /**
      * @name rootScrollHandler
      * @description Scroll event handler 
-     * It triggers whenever the user scrolls, It maintains 2 keys  scrollUpRenderLimit
+     * It triggers whenever the user scrolls and calcualte the upper scroll limit while scrolling up
      * Depends on these it decides wether to process upper section, bottom section and also triggers fetching more data
      * @param {Boolean} TOP 
      */
@@ -704,7 +704,7 @@ const InfiniteScroll = (window, document) => {
     }
 
     /**
-     * @name addEventListeners
+     * @name extendConfig
      * @description user can extend the config - For now only API, LIMIT can be extended
      * @returns NULL
      */
@@ -719,7 +719,7 @@ const InfiniteScroll = (window, document) => {
 
     /**
      * @name _init
-     * @description triggering the virtual list plugin
+     * @description triggering the plugin
      */
     const _init = (configObj = {}) => {
         extendConfig(configObj);

@@ -30,6 +30,23 @@ const loadImageAsync = (elem, src) => {
     realImage.src = src;
 }
 
+ /**
+ * @name renderLoaderAnim
+ * @description rendering the placeholder cards for better UX
+ * @argument {Number} limit 
+ */
+const renderLoaderAnim = () => {
+    let loaderAnim = document.createElement('div'),
+        divChild = document.createElement('div'),
+        divChild2 = document.createElement('div'),
+        divChild3 = document.createElement('div');
+    loaderAnim.className = "loader-anim";
+    loaderAnim.appendChild(divChild);
+    loaderAnim.appendChild(divChild2);
+    loaderAnim.appendChild(divChild3);
+    return loaderAnim;
+}
+
 /**
  * @name prepareAuthorPicElement
  * @description preparing the author profile pic element
@@ -65,6 +82,10 @@ const prepareAuthornameElement = (author, time) => {
     timeStamp.className = CLASSNAME_TIMESTAMP;
     timeStamp.innerHTML = (time) ? formatTime(new Date(time)) : "";
 
+    if (author.isLoader) {
+        authorElement.appendChild(renderLoaderAnim());
+    }
+
     authorElement.appendChild(username)
     authorElement.appendChild(timeStamp);
 
@@ -80,9 +101,14 @@ const prepareAuthornameElement = (author, time) => {
 const prepareAuthorInfoElement = (data, API_END) => {
     let item = document.createElement('div');
     item.className = CLASSNAME_AUTHOR;
-    let profilePic = prepareAuthorPicElement(API_END+data.author.photoUrl);
+
+    if (data.id) {
+        let profilePic = prepareAuthorPicElement(API_END+data.author.photoUrl);
+        item.appendChild(profilePic)
+    }
+
     let authorName = prepareAuthornameElement(data.author, data.updated);
-    item.appendChild(profilePic)
+    
     item.appendChild(authorName);
     return item;
 }
@@ -99,24 +125,6 @@ const prepareStoryElement = (item, page) => {
     storyElement.className = CLASSNAME_STORY;
     storyElement.innerHTML = item.content;
     return storyElement;
-}
-
-
- /**
- * @name renderLoaderAnim
- * @description rendering the placeholder cards for better UX
- * @argument {Number} limit 
- */
-const renderLoaderAnim = () => {
-    let loaderAnim = document.createElement('div'),
-        divChild = document.createElement('div'),
-        divChild2 = document.createElement('div'),
-        divChild3 = document.createElement('div');
-    loaderAnim.className = "loader-anim";
-    loaderAnim.appendChild(divChild);
-    loaderAnim.appendChild(divChild2);
-    loaderAnim.appendChild(divChild3);
-    return loaderAnim;
 }
 
 export {

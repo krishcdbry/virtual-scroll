@@ -33,7 +33,7 @@ const MESSAGE_PREFETCH_LIMIT = 100;
 
 // Dummy card object
 const PLACE_HOLDER_OBJ = {
-    author : {name:  "name", photoUrl: null},
+    author : {name:  "name", photoUrl: null, isLoader: true},
     content : null,
     id : null,
     updated : null

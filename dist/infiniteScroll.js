@@ -108,7 +108,7 @@ var MESSAGE_PREFETCH_LIMIT = 100;
 
 // Dummy card object
 var PLACE_HOLDER_OBJ = {
-    author: { name: "name", photoUrl: null },
+    author: { name: "name", photoUrl: null, isLoader: true },
     content: null,
     id: null,
     updated: null
@@ -898,7 +898,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
     /**
      * @name rootScrollHandler
      * @description Scroll event handler 
-     * It triggers whenever the user scrolls, It maintains 2 keys  scrollUpRenderLimit
+     * It triggers whenever the user scrolls and calcualte the upper scroll limit while scrolling up
      * Depends on these it decides wether to process upper section, bottom section and also triggers fetching more data
      * @param {Boolean} TOP 
      */
@@ -992,7 +992,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
     };
 
     /**
-     * @name addEventListeners
+     * @name extendConfig
      * @description user can extend the config - For now only API, LIMIT can be extended
      * @returns NULL
      */
@@ -1007,7 +1007,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
 
     /**
      * @name _init
-     * @description triggering the virtual list plugin
+     * @description triggering the plugin
      */
     var _init = function _init() {
         var configObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -1060,6 +1060,23 @@ var loadImageAsync = function loadImageAsync(elem, src) {
 };
 
 /**
+* @name renderLoaderAnim
+* @description rendering the placeholder cards for better UX
+* @argument {Number} limit 
+*/
+var renderLoaderAnim = function renderLoaderAnim() {
+    var loaderAnim = document.createElement('div'),
+        divChild = document.createElement('div'),
+        divChild2 = document.createElement('div'),
+        divChild3 = document.createElement('div');
+    loaderAnim.className = "loader-anim";
+    loaderAnim.appendChild(divChild);
+    loaderAnim.appendChild(divChild2);
+    loaderAnim.appendChild(divChild3);
+    return loaderAnim;
+};
+
+/**
  * @name prepareAuthorPicElement
  * @description preparing the author profile pic element
  * @argument {String} url 
@@ -1094,6 +1111,10 @@ var prepareAuthornameElement = function prepareAuthornameElement(author, time) {
     timeStamp.className = _constants.CLASSNAME_TIMESTAMP;
     timeStamp.innerHTML = time ? (0, _utils.formatTime)(new Date(time)) : "";
 
+    if (author.isLoader) {
+        authorElement.appendChild(renderLoaderAnim());
+    }
+
     authorElement.appendChild(username);
     authorElement.appendChild(timeStamp);
 
@@ -1109,9 +1130,14 @@ var prepareAuthornameElement = function prepareAuthornameElement(author, time) {
 var prepareAuthorInfoElement = function prepareAuthorInfoElement(data, API_END) {
     var item = document.createElement('div');
     item.className = _constants.CLASSNAME_AUTHOR;
-    var profilePic = prepareAuthorPicElement(API_END + data.author.photoUrl);
+
+    if (data.id) {
+        var profilePic = prepareAuthorPicElement(API_END + data.author.photoUrl);
+        item.appendChild(profilePic);
+    }
+
     var authorName = prepareAuthornameElement(data.author, data.updated);
-    item.appendChild(profilePic);
+
     item.appendChild(authorName);
     return item;
 };
@@ -1128,23 +1154,6 @@ var prepareStoryElement = function prepareStoryElement(item, page) {
     storyElement.className = _constants.CLASSNAME_STORY;
     storyElement.innerHTML = item.content;
     return storyElement;
-};
-
-/**
-* @name renderLoaderAnim
-* @description rendering the placeholder cards for better UX
-* @argument {Number} limit 
-*/
-var renderLoaderAnim = function renderLoaderAnim() {
-    var loaderAnim = document.createElement('div'),
-        divChild = document.createElement('div'),
-        divChild2 = document.createElement('div'),
-        divChild3 = document.createElement('div');
-    loaderAnim.className = "loader-anim";
-    loaderAnim.appendChild(divChild);
-    loaderAnim.appendChild(divChild2);
-    loaderAnim.appendChild(divChild3);
-    return loaderAnim;
 };
 
 exports.prepareStoryElement = prepareStoryElement;

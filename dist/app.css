@@ -168,6 +168,7 @@ html,body {
       display: flex;
       flex-direction: column;
       margin-left: 13px;
+      position: relative;
   }
   
   .author-section .name-section .username {
@@ -192,7 +193,7 @@ html,body {
   }
   
   .dummy .card {
-      height: 250px;
+    height: 215px;
   }
 
   #loader {
@@ -209,6 +210,7 @@ html,body {
       background: #f0f0f0;
       color: #f0f0f0;
       width: 100px;
+      border-radius: 2px;
   }
   
   .dummy .card .timestamp {
@@ -224,6 +226,7 @@ html,body {
       height: 115px;
       margin-top: 15px;
       color: #f0f0f0;
+      border-radius: 4px;
   }
 
 
@@ -250,6 +253,12 @@ html,body {
     border-radius: 50%;
     background: #fff;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+
+  .name-section .loader-anim div {
+    top: 20px;
+    width: 8px;
+    height: 8px;
   }
 
   .loader-anim div:nth-child(1) {
