@@ -68,7 +68,6 @@ const InfiniteScroll = (window, document) => {
     let activeViewportPages = [];
     let localMessageStore = {};
     let totalMessageItems = 0;
-    let contentTransforms = [];
     let lastPageHeight = 0;
     let currentContentPaddingTop = 0;
     let stopProcessing = false;
@@ -416,9 +415,7 @@ const InfiniteScroll = (window, document) => {
             
             prependNewPage();
 
-            newPaddingTop = currentContentPaddingTop - ((contentTransforms.length > 0) 
-                                                        ? contentTransforms.pop() 
-                                                        : lastPageHeight);
+            newPaddingTop = currentContentPaddingTop - lastPageHeight;
             // Removing pages from bottom
             if (activeViewportPages.length > 2) {
                 removeLastPage(sectionElements[sectionElements.length-1], newPaddingTop);
