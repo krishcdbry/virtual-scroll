@@ -492,7 +492,7 @@ var InfiniteScrollLib = function InfiniteScrollLib(window, document) {
         if (event.touches && event.touches.length > 1) {
             return;
         }
-        L = (0, _constants.GET_INTERACTION_POINT)(event);
+        touchStartPosition = (0, _constants.GET_INTERACTION_POINT)(event);
     };
 
     /**

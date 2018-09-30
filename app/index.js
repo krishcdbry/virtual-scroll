@@ -241,7 +241,7 @@ const InfiniteScrollLib = (window, document) => {
         if (event.touches && event.touches.length > 1) {
             return;
         }
-        L = GET_INTERACTION_POINT(event);
+        touchStartPosition = GET_INTERACTION_POINT(event);
     }
 
     /**
