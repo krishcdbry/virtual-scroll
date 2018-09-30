@@ -525,6 +525,7 @@ const InfiniteScroll = (window, document) => {
         LOADER_ELEMENT.appendChild(renderLoaderAnim());
         LOADER_ELEMENT.appendChild(documentFragment);
         LOADER_ELEMENT.style.opacity = 1;
+        PLACE_HOLDER_ELEMENT.remove();
         loaderRendered = true;
     }
 

@@ -818,6 +818,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
         _constants.LOADER_ELEMENT.appendChild((0, _domUtils.renderLoaderAnim)());
         _constants.LOADER_ELEMENT.appendChild(documentFragment);
         _constants.LOADER_ELEMENT.style.opacity = 1;
+        _constants.PLACE_HOLDER_ELEMENT.remove();
         loaderRendered = true;
     };
 
