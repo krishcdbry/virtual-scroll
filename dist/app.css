@@ -193,7 +193,8 @@ html,body {
   }
   
   .dummy .card {
-    height: 215px;
+    height: 230px;
+    padding: 17px 17px;
   }
 
   #loader {
@@ -229,6 +230,13 @@ html,body {
       border-radius: 4px;
   }
 
+  #place-holder .loader-anim {
+    top: 53%;
+  }
+
+  #place-holder .name-section .loader-anim {
+    top: 50%;
+  }
 
   .loader-anim {
     display: inline-block;

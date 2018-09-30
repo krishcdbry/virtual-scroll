@@ -728,7 +728,6 @@ const InfiniteScroll = (window, document) => {
         fetchData();
     }
 
-  
     return {
         init : _init
     }
