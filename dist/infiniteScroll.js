@@ -431,7 +431,11 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
         if (!element) {
             return;
         }
+        console.log("parent", element.parentNode);
         var parent = element.parentNode;
+        if (!parent) {
+            return;
+        }
         spliceItem(parent.id, element.id);
         var elementHeight = element.offsetHeight;
         scrollUpRenderLimit -= elementHeight;
@@ -488,14 +492,15 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
      * @param NULL
      * @returns NULL
      */
-    var transitionEnd = function transitionEnd() {
-        if (!currentSwipeElement) {
+    var transitionEnd = function transitionEnd(e) {
+        var elem = e.target;
+        if (!elem) {
             return;
         }
-        currentSwipeElement.classList.add('remove');
-        currentSwipeElement.innerHTML = "";
+        elem.classList.add('remove');
+        elem.innerHTML = "";
         setTimeout(function () {
-            removeSwipedOffNode(currentSwipeElement);
+            removeSwipedOffNode(elem);
         }, _constants.SMOOTH_ASYNC_TIMEOUT);
     };
 
@@ -550,15 +555,16 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
         // Checking the X,Y range to discard the item
 
         if (isXAxisInRange(x) && isYAxisInRange(y)) {
+            var elem = currentSwipeElement;
             if (currentSwipeElement && currentSwipeElement.parentNode) {
                 var xPos = windowWidth + 100;
                 if (x < touchStartPosition.x) {
                     xPos = ~xPos;
                 }
-                currentSwipeElement.style.opacity = '0.2';
-                currentSwipeElement.style.transform = 'translate3d(' + xPos + 'px, 0, 0)';
-                currentSwipeElement.style.height = currentSwipeElement.offsetHeight + "px";
-                currentSwipeElement.addEventListener('transitionend', transitionEnd);
+                elem.style.opacity = '0.2';
+                elem.style.transform = 'translate3d(' + xPos + 'px, 0, 0)';
+                elem.style.height = currentSwipeElement.offsetHeight + "px";
+                elem.addEventListener('transitionend', transitionEnd);
             }
         } else {
             resetElementPosition();

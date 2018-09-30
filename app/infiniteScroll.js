@@ -157,7 +157,11 @@ const InfiniteScroll = (window, document) => {
         if (!element) {
             return;
         }
+        console.log("parent", element.parentNode);
         let parent = element.parentNode;
+        if (!parent) {
+           return;
+        }
         spliceItem(parent.id, element.id);
         let elementHeight = element.offsetHeight;
         scrollUpRenderLimit -= elementHeight;
@@ -213,14 +217,15 @@ const InfiniteScroll = (window, document) => {
      * @param NULL
      * @returns NULL
      */
-    const transitionEnd = () => {
-        if(!currentSwipeElement) {
+    const transitionEnd = (e) => {
+        let elem = e.target;
+        if(!elem) {
             return;
         }
-        currentSwipeElement.classList.add('remove');
-        currentSwipeElement.innerHTML = "";
+        elem.classList.add('remove');
+        elem.innerHTML = "";
         setTimeout(() => {
-            removeSwipedOffNode(currentSwipeElement);
+            removeSwipedOffNode(elem);
         }, SMOOTH_ASYNC_TIMEOUT)
     }
 
@@ -273,15 +278,16 @@ const InfiniteScroll = (window, document) => {
 
         // Checking the X,Y range to discard the item
         if (isXAxisInRange(x) && isYAxisInRange(y)) {
+            let elem = currentSwipeElement;
             if (currentSwipeElement && currentSwipeElement.parentNode) {
                 let xPos = windowWidth+100;
                 if (x < touchStartPosition.x) {
                     xPos = ~xPos;
                 }
-                currentSwipeElement.style.opacity = '0.2';
-                currentSwipeElement.style.transform = `translate3d(${xPos}px, 0, 0)`;
-                currentSwipeElement.style.height = currentSwipeElement.offsetHeight+"px";
-                currentSwipeElement.addEventListener('transitionend', transitionEnd);
+                elem.style.opacity = '0.2';
+                elem.style.transform = `translate3d(${xPos}px, 0, 0)`;
+                elem.style.height = currentSwipeElement.offsetHeight+"px";
+                elem.addEventListener('transitionend', transitionEnd);
             }
         }
         else {
