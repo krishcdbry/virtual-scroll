@@ -923,7 +923,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
                 scrollUpRenderLimit = lastRenderUpdatePosition - lastPageHeight;
 
                 if (loadMorePages()) {
-                    fetchData(); // Fetches more pages
+                    //fetchData();   // Fetches more pages
                 }
 
                 if (stopProcessing) {
