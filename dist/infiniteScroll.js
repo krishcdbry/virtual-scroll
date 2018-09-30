@@ -965,6 +965,7 @@ var InfiniteScrollLib = function InfiniteScrollLib(window, document) {
         });
         _constants.CONTENT_ELEMENT.addEventListener('touchmove', touchMove);
         _constants.CONTENT_ELEMENT.addEventListener('touchend', touchEnd);
+        _constants.CONTENT_ELEMENT.addEventListener('touchcancel', touchEnd);
         window.addEventListener('resize', adjustWindowMeasurments);
     };
 

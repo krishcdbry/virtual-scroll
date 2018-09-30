@@ -701,6 +701,7 @@ const InfiniteScrollLib = (window, document) => {
         })
         CONTENT_ELEMENT.addEventListener('touchmove', touchMove);
         CONTENT_ELEMENT.addEventListener('touchend', touchEnd);
+        CONTENT_ELEMENT.addEventListener('touchcancel', touchEnd);
         window.addEventListener('resize', adjustWindowMeasurments);
     }
 
