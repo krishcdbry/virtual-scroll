@@ -73,6 +73,9 @@ html,body {
       display: block;
       top: 68px;
       transform: translate(-50%, 0%);
+      -webkit-transform: translate(-50%, 0%);
+      -moz-transform: translate(-50%, 0%);
+      -ms-transform: translate(-50%, 0%);
   }
   
   #container {
@@ -89,6 +92,9 @@ html,body {
   #content {
       padding-top: 0px;
       transition: padding 0s ease-in-out;
+      -webkit-transition: padding 0s ease-in-out;
+      -moz-transition: padding 0s ease-in-out;
+      -ms-transition: padding 0s ease-in-out;
       width: 100%;
       touch-action: pan-x;
   }
@@ -108,6 +114,9 @@ html,body {
       background-color: #ffffff;
       will-change: transform height;
       transition: transform 0.2s, height 0.2s ease-in;
+      -webkit-transition: transform 0.2s, height 0.2s ease-in;
+      -moz-transition: transform 0.2s, height 0.2s ease-in;
+      -ms-transition: transform 0.2s, height 0.2s ease-in;
       overflow: auto;
   }
   
@@ -140,7 +149,6 @@ html,body {
   .author-section {
       display: flex;
       align-items: center;
-      /* margin: 5px 0px; */
   }
   
   .author-section .author-pic {
@@ -149,6 +157,9 @@ html,body {
       border-radius: 20px;
       background: #ddd;
       transition: opacity 0.7s ease-in-out;
+      -webkit-transition: opacity 0.7s ease-in-out;
+      -moz-transition: opacity 0.7s ease-in-out;
+      -ms-transition: opacity 0.7s ease-in-out;
   }
   
   .author-section .name-section {
@@ -221,8 +232,12 @@ html,body {
     height: 64px;
     position: absolute;
     transform: translate3d(-50%, -50%, 0);
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    -moz-transform: translate3d(-50%, -50%, 0);
+    -ms-transform: translate3d(-50%, -50%, 0);
     top: 50%;
     left: 50%;
+    z-index: 5;
   }
 
   .loader-anim div {
@@ -238,21 +253,33 @@ html,body {
   .loader-anim div:nth-child(1) {
     left: 6px;
     animation: loader-animation-1 0.6s infinite;
+    -webkit-animation: loader-animation-1 0.6s infinite;
+    -moz-animation: loader-animation-1 0.6s infinite;
+    -ms-animation: loader-animation-1 0.6s infinite;
   }
 
   .loader-anim div:nth-child(2) {
     left: 6px;
     animation: loader-animation-2 0.6s infinite;
+    -webkit-animation: loader-animation-2 0.6s infinite;
+    -moz-animation: loader-animation-2 0.6s infinite;
+    -ms-animation: loader-animation-2 0.6s infinite;
   }
 
   .loader-anim div:nth-child(3) {
     left: 26px;
     animation: loader-animation-2 0.6s infinite;
+    -webkit-animation: loader-animation-2 0.6s infinite;
+    -moz-animation: loader-animation-2 0.6s infinite;
+    -ms-animation: loader-animation-2 0.6s infinite;
   }
 
   .loader-anim div:nth-child(4) {
     left: 45px;
     animation: loader-animation-3 0.6s infinite;
+    -webkit-animation: loader-animation-3 0.6s infinite;
+    -moz-animation: loader-animation-3 0.6s infinite;
+    -ms-animation: loader-animation-3 0.6s infinite;
   }
 
   @keyframes loader-animation-1 {
@@ -261,15 +288,6 @@ html,body {
     }
     100% {
       transform: scale(1);
-    }
-  }
-
-  @keyframes loader-animation-3 {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
     }
   }
 
@@ -282,21 +300,21 @@ html,body {
     }
   }
 
+  @keyframes loader-animation-3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+
   @-webkit-keyframes loader-animation-1 {
     0% {
       transform: scale(0);
     }
     100% {
       transform: scale(1);
-    }
-  }
-
-  @-webkit-keyframes loader-animation-3 {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
     }
   }
 
@@ -309,21 +327,21 @@ html,body {
     }
   }
 
+  @-webkit-keyframes loader-animation-3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+
   @-moz-keyframes loader-animation-1 {
     0% {
       transform: scale(0);
     }
     100% {
       transform: scale(1);
-    }
-  }
-
-  @-moz-keyframes loader-animation-3 {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
     }
   }
 
@@ -336,6 +354,15 @@ html,body {
     }
   }
 
+  @-moz-keyframes loader-animation-3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+
   @-ms-keyframes loader-animation-1 {
     0% {
       transform: scale(0);
@@ -345,21 +372,21 @@ html,body {
     }
   }
 
-  @-ms-keyframes loader-animation-3 {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
-    }
-  }
-
   @-ms-keyframes loader-animation-2 {
     0% {
       transform: translate(0, 0);
     }
     100% {
       transform: translate(19px, 0);
+    }
+  }
+
+  @-ms-keyframes loader-animation-3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
     }
   }
   
