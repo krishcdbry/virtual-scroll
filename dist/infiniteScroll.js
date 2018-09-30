@@ -104,6 +104,7 @@ var SAFE_SCROLL_LIMIT = 250;
 var SAFE_ASYNC_TIMEOUT = 100;
 var SMOOTH_ASYNC_TIMEOUT = 200;
 var RETRY_API_FETCH_TIMEOUT = 15000;
+var MESSAGE_PREFETCH_LIMIT = 100;
 
 // Dummy card object
 var PLACE_HOLDER_OBJ = {
@@ -431,7 +432,6 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
         if (!element) {
             return;
         }
-        console.log("parent", element.parentNode);
         var parent = element.parentNode;
         if (!parent) {
             return;
@@ -671,7 +671,9 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
             if (processRendering) {
                 return;
             }
+
             processRendering = true;
+
             if (activeViewportPages[2] < totalPageCount) {
                 appendNewPage();
             }
@@ -712,9 +714,9 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
     var prepareListItem = function prepareListItem(list, pageId) {
         var documentFragment = document.createDocumentFragment();
         var listPage = document.createElement('div');
+        var pageItems = [];
         listPage.id = pageId;
         listPage.className = "page";
-        var pageItems = [];
 
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
@@ -817,7 +819,6 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
         _constants.LOADER_ELEMENT.appendChild(documentFragment);
         _constants.LOADER_ELEMENT.style.opacity = 1;
         loaderRendered = true;
-        // PLACE_HOLDER_ELEMENT.remove();
     };
 
     /**
@@ -891,7 +892,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
      * @returns {Boolean}
      */
     var isPreFetchData = function isPreFetchData() {
-        return totalPageCount < 3 || totalMessageItems < 100;
+        return totalPageCount < 3 || totalMessageItems < MESSAGE_PREFETCH_LIMIT;
     };
 
     /**
@@ -955,6 +956,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
             scrollUpRenderLimit = currentContentPaddingTop;
         }
 
+        // On rapid scroll cases prepending the first page
         if (scrollUpRenderLimit < 0 || scrollPosition < 100) {
             scrollUpRenderLimit = 0;
             if (activeViewportPages[0] != 1) {

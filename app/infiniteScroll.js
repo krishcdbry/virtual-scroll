@@ -158,7 +158,6 @@ const InfiniteScroll = (window, document) => {
         if (!element) {
             return;
         }
-        console.log("parent", element.parentNode);
         let parent = element.parentNode;
         if (!parent) {
            return;
@@ -395,8 +394,11 @@ const InfiniteScroll = (window, document) => {
         if (direction == LOAD_BOTTOM && totalPageCount > 2) {
             if (processRendering) {
                 return;
+            
             }
+
             processRendering = true;
+
             if (activeViewportPages[2] < totalPageCount) {
                 appendNewPage();
             }
@@ -412,7 +414,6 @@ const InfiniteScroll = (window, document) => {
             else {
                 processRendering = false;
             }
-
         }
         else {
            
@@ -440,9 +441,9 @@ const InfiniteScroll = (window, document) => {
     const prepareListItem = (list, pageId) => {
         let documentFragment = document.createDocumentFragment();
         let listPage = document.createElement('div');
+        let pageItems = [];
         listPage.id = pageId
         listPage.className = "page";
-        let pageItems = [];
 
         for (let item of list) {
             let listElem = document.createElement('div');
@@ -525,7 +526,6 @@ const InfiniteScroll = (window, document) => {
         LOADER_ELEMENT.appendChild(documentFragment);
         LOADER_ELEMENT.style.opacity = 1;
         loaderRendered = true;
-        // PLACE_HOLDER_ELEMENT.remove();
     }
 
     /**
@@ -601,7 +601,7 @@ const InfiniteScroll = (window, document) => {
      * @returns {Boolean}
      */
     const isPreFetchData = () => {
-        return totalPageCount < 3 || totalMessageItems < 100;
+        return totalPageCount < 3 || totalMessageItems < MESSAGE_PREFETCH_LIMIT;
     }
 
     /**
@@ -667,7 +667,8 @@ const InfiniteScroll = (window, document) => {
             applyPadding(currentContentPaddingTop);
             scrollUpRenderLimit = currentContentPaddingTop;                  
         }
-
+ 
+        // On rapid scroll cases prepending the first page
         if (scrollUpRenderLimit < 0 || scrollPosition < 100) {
             scrollUpRenderLimit =  0;
             if (activeViewportPages[0] != 1) {
