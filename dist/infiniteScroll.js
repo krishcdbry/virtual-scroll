@@ -488,7 +488,6 @@ var InfiniteScrollLib = function InfiniteScrollLib(window, document) {
      * @returns NULL
      */
     var touchStart = function touchStart(event, elem) {
-        event.preventDefault();
         currentSwipeElement = elem;
         if (event.touches && event.touches.length > 1) {
             return;
@@ -504,7 +503,6 @@ var InfiniteScrollLib = function InfiniteScrollLib(window, document) {
      * @returns NULL
      */
     var touchMove = function touchMove(event) {
-        event.preventDefault();
 
         if (!touchStartPosition.x) {
             return;
@@ -526,7 +524,6 @@ var InfiniteScrollLib = function InfiniteScrollLib(window, document) {
      * @returns NULL
      */
     var touchEnd = function touchEnd(event) {
-        event.preventDefault();
         var _touchLastPosition2 = touchLastPosition,
             x = _touchLastPosition2.x,
             y = _touchLastPosition2.y;
