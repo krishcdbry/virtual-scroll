@@ -534,6 +534,7 @@ const InfiniteScroll = (window, document) => {
      * @returns {Boolean}
      */
     const loadMorePages = () => {
+        console.log("Load more ? ",  activeViewportPages, totalPageCount);
         if (totalPageCount > 2 && activeViewportPages.length > 2) {
             if (activeViewportPages[2] != totalPageCount) {
                 return false;
