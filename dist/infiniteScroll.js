@@ -284,26 +284,6 @@ exports.getIndexOfkey = getIndexOfkey;
 "use strict";
 
 
-var _infiniteScroll = __webpack_require__(3);
-
-var _infiniteScroll2 = _interopRequireDefault(_infiniteScroll);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-window.addEventListener('load', function () {
-    (function (window, document) {
-        window.IS = (0, _infiniteScroll2.default)(window, document);
-        IS.init();
-    })(window, document);
-});
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -312,7 +292,7 @@ var _constants = __webpack_require__(0);
 
 var _utils = __webpack_require__(1);
 
-var _domUtils = __webpack_require__(4);
+var _domUtils = __webpack_require__(3);
 
 /**
  * @name InfiniteScroll
@@ -1027,7 +1007,7 @@ var InfiniteScroll = function InfiniteScroll(window, document) {
 exports.default = InfiniteScroll;
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
