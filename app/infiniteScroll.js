@@ -633,7 +633,7 @@ const InfiniteScroll = (window, document) => {
                 scrollUpRenderLimit = lastRenderUpdatePosition-lastPageHeight;
                
                 if (loadMorePages()) {
-                    //fetchData();   // Fetches more pages
+                    fetchData();   // Fetches more pages
                 }
             
                 if(stopProcessing) {   // Once the data from API ends
