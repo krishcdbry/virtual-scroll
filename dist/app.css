@@ -56,12 +56,14 @@ html,body {
   #container::-webkit-scrollbar { 
     width: 0 !important;
     -ms-overflow-style: none;
+    -webkit-overflow-style: none;
     overflow: -moz-scrollbars-none;
   }
   
   *::-webkit-scrollbar { 
     width: 0 !important;
     -ms-overflow-style: none;
+    -webkit-overflow-style: none;
     overflow: -moz-scrollbars-none;
   }
   
