@@ -201,11 +201,13 @@ const InfiniteScrollLib = (window, document) => {
      * @returns NULL
      */
     const resetElementPosition = () => {
-        let transform = 'translate3d(0,0,0)';
-        currentSwipeElement.style.transform = transform;
-        currentSwipeElement.style.webkitTransform = transform;
-        currentSwipeElement.style.MozTransform = transform;   
-        currentSwipeElement.style.opacity = '1';
+        window.requestAnimationFrame(() => {
+            let transform = 'translate3d(0,0,0)';
+            currentSwipeElement.style.transform = transform;
+            currentSwipeElement.style.webkitTransform = transform;
+            currentSwipeElement.style.MozTransform = transform;   
+            currentSwipeElement.style.opacity = '1';
+        });
     }
 
 
@@ -282,10 +284,12 @@ const InfiniteScrollLib = (window, document) => {
                 if (x < touchStartPosition.x) {
                     xPos = ~xPos;
                 }
-                elem.style.opacity = '0.2';
-                elem.style.transform = `translate3d(${xPos}px, 0, 0)`;
-                elem.style.height = currentSwipeElement.offsetHeight+"px";
-                elem.addEventListener('transitionend', transitionEnd);
+                window.requestAnimationFrame(() => {
+                    elem.style.opacity = '0.2';
+                    elem.style.transform = `translate3d(${xPos}px, 0, 0)`;
+                    elem.style.height = currentSwipeElement.offsetHeight+"px";
+                    elem.addEventListener('transitionend', transitionEnd);
+                });
             }
         }
         else {

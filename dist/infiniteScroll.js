@@ -453,11 +453,13 @@ var InfiniteScrollLib = function InfiniteScrollLib(window, document) {
      * @returns NULL
      */
     var resetElementPosition = function resetElementPosition() {
-        var transform = 'translate3d(0,0,0)';
-        currentSwipeElement.style.transform = transform;
-        currentSwipeElement.style.webkitTransform = transform;
-        currentSwipeElement.style.MozTransform = transform;
-        currentSwipeElement.style.opacity = '1';
+        window.requestAnimationFrame(function () {
+            var transform = 'translate3d(0,0,0)';
+            currentSwipeElement.style.transform = transform;
+            currentSwipeElement.style.webkitTransform = transform;
+            currentSwipeElement.style.MozTransform = transform;
+            currentSwipeElement.style.opacity = '1';
+        });
     };
 
     /**
@@ -535,10 +537,12 @@ var InfiniteScrollLib = function InfiniteScrollLib(window, document) {
                 if (x < touchStartPosition.x) {
                     xPos = ~xPos;
                 }
-                elem.style.opacity = '0.2';
-                elem.style.transform = 'translate3d(' + xPos + 'px, 0, 0)';
-                elem.style.height = currentSwipeElement.offsetHeight + "px";
-                elem.addEventListener('transitionend', transitionEnd);
+                window.requestAnimationFrame(function () {
+                    elem.style.opacity = '0.2';
+                    elem.style.transform = 'translate3d(' + xPos + 'px, 0, 0)';
+                    elem.style.height = currentSwipeElement.offsetHeight + "px";
+                    elem.addEventListener('transitionend', transitionEnd);
+                });
             }
         } else {
             resetElementPosition();
