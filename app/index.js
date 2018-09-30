@@ -237,6 +237,7 @@ const InfiniteScrollLib = (window, document) => {
      * @returns NULL
      */
     const touchStart = (event, elem) => {
+        event.preventDefault();
         currentSwipeElement = elem;
         if (event.touches && event.touches.length > 1) {
             return;
@@ -252,6 +253,7 @@ const InfiniteScrollLib = (window, document) => {
      * @returns NULL
      */
     const touchMove = (event) => {
+        event.preventDefault();
         
         if (!touchStartPosition.x) {
             return;
@@ -273,7 +275,7 @@ const InfiniteScrollLib = (window, document) => {
      * @returns NULL
      */
     const touchEnd = (event) => {
-        
+        event.preventDefault();
         let {x,y} = touchLastPosition;
 
         // Checking the X,Y range to discard the item
