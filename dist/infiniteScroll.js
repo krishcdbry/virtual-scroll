@@ -438,11 +438,13 @@ var InfiniteScrollLib = function InfiniteScrollLib(window, document) {
 
         // Checking the X,Y range to discard the item
 
-        currentSwipeElement.style.transform = transform;
-        currentSwipeElement.style.webkitTransform = transform;
-        currentSwipeElement.style.MozTransform = transform;
-        if (isXAxisInRange(x) && isYAxisInRange(y)) {
-            currentSwipeElement.style.opacity = '0.4';
+        if (isYAxisInRange(y)) {
+            currentSwipeElement.style.transform = transform;
+            currentSwipeElement.style.webkitTransform = transform;
+            currentSwipeElement.style.MozTransform = transform;
+            if (isXAxisInRange(x)) {
+                currentSwipeElement.style.opacity = '0.4';
+            }
         }
         animationFrameProcessing = false;
     };
