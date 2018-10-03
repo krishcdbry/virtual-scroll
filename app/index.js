@@ -184,15 +184,12 @@ const InfiniteScrollLib = (window, document) => {
         let transform = 'translate3d('+(XPos)+'px, 0, 0)';
         
         // Checking the X,Y range to discard the item
-       
-       if (isYAxisInRange(y)) {
+        if (isXAxisInRange(x) && isYAxisInRange(y)) {
             currentSwipeElement.style.transform = transform;
             currentSwipeElement.style.webkitTransform = transform;
             currentSwipeElement.style.MozTransform = transform;
-            if (isXAxisInRange(x)) {
-                currentSwipeElement.style.opacity = '0.4';
-            }
-       }
+            currentSwipeElement.style.opacity = '0.4';
+        }
         animationFrameProcessing = false;
     }
 
@@ -750,7 +747,7 @@ const InfiniteScrollLib = (window, document) => {
 try {
     
     window._IS = InfiniteScrollLib(window, document);
-    console.log("Infinite Scroll - Loaded - V1.0.0");
+    console.log("Infinite Scroll - Loaded - v1.0.0");
 
 } catch (Error) {
 
