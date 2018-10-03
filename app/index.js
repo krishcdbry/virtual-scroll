@@ -750,7 +750,7 @@ const InfiniteScrollLib = (window, document) => {
 try {
     
     window._IS = InfiniteScrollLib(window, document);
-    console.log("Infinite Scroll - Loaded - v1.0.0");
+    console.log("Infinite Scroll - Loaded - V1.0.0");
 
 } catch (Error) {
 
