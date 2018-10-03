@@ -437,10 +437,11 @@ var InfiniteScrollLib = function InfiniteScrollLib(window, document) {
         var transform = 'translate3d(' + XPos + 'px, 0, 0)';
 
         // Checking the X,Y range to discard the item
+
+        currentSwipeElement.style.transform = transform;
+        currentSwipeElement.style.webkitTransform = transform;
+        currentSwipeElement.style.MozTransform = transform;
         if (isXAxisInRange(x) && isYAxisInRange(y)) {
-            currentSwipeElement.style.transform = transform;
-            currentSwipeElement.style.webkitTransform = transform;
-            currentSwipeElement.style.MozTransform = transform;
             currentSwipeElement.style.opacity = '0.4';
         }
         animationFrameProcessing = false;
