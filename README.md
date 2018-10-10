@@ -1,5 +1,5 @@
 # InfiniteScroll
-Infinitely Scrolling Message List
+Infinitely scrolling message list with swipe off functionality  (Best viewed in mobile UI)
 
 Getting Started
 -----
