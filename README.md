@@ -19,7 +19,7 @@ npm run build
 Krishcdbry (krishcdbry@gmail.com)
 
 ## Demo
-Click here (https://krishcdbry.github.io/infinite-scroll/)
+Click here (https://krishcdbry.github.io/virtual-scroll/)
 
 ## Licence
 MIT @[krishcdbry](krishcdbry.com)
