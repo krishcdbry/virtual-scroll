@@ -1,4 +1,4 @@
-# InfiniteScroll
+# Vitual Scroll
 Infinitely scrolling message list with swipe off functionality  (Best viewed in mobile UI)
 
 Getting Started
